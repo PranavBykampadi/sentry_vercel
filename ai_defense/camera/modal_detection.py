@@ -38,7 +38,7 @@ detection_image = (
         "numpy",
         "ffmpeg-python"
     )
-    .add_local_dir(os.path.join(os.getcwd(), 'test_videos'), remote_path="/root/test_videos")
+    .add_local_dir(os.path.join(os.getcwd(), ' '), remote_path="/root/ ")
 )
 
 # Create app for Modal
@@ -47,9 +47,6 @@ app = modal.App()
 # Create a volume to store processed output
 output_volume = modal.Volume.from_name("drone-detection-output", create_if_missing=True)
 
-# Ensure test_videos directory exists
-test_videos_dir = os.path.join(os.getcwd(), 'test_videos')
-os.makedirs(test_videos_dir, exist_ok=True)
 
 @app.function(
     image=detection_image,
@@ -61,7 +58,7 @@ def detect_objects(video_path: str):
     model = YOLO("yolov8x.pt")
     
     # Convert local path to container path
-    container_video_path = os.path.join("/root/test_videos", os.path.basename(video_path))
+    container_video_path = os.path.join("/root/ ", os.path.basename(video_path))
     cap = cv2.VideoCapture(container_video_path)
     if not cap.isOpened():
         print(f"Error: Could not open video {container_video_path}")
@@ -245,11 +242,11 @@ def copy_output_to_local():
 @app.local_entrypoint()
 def main():
     """Main function to run the object detection pipeline."""
-    video_dir = os.path.join(os.getcwd(), 'test_videos')
+    video_dir = os.path.join(os.getcwd(), ' ')
     video_files = [f for f in os.listdir(video_dir) if f.endswith(('.mp4', '.avi', '.mov'))]
     
     if not video_files:
-        print("No video files found in test_videos directory.")
+        print("No video files found in   directory.")
         return
     
     print("Found", len(video_files), "videos:")

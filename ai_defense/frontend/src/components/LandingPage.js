@@ -99,7 +99,7 @@ const LandingPage = () => {
   // Unified authentication handler:
   const handleAuth = async (mode = 'login') => {
     if (isAuthenticated) {
-      navigate('/dashboard');
+      navigate('https://localhost:3000');
     } else {
       try {
         if (mode === 'signup') {
@@ -109,7 +109,7 @@ const LandingPage = () => {
           });
         } else {
           await loginWithRedirect({
-            appState: { returnTo: '/dashboard' }
+            appState: { returnTo: 'https://localhost:3000' }
           });
         }
       } catch (error) {
